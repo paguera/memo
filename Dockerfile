@@ -10,11 +10,11 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN node node_modules/typescript/bin/tsc -b && npx vite build
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:stable-alpine
-COPY --from=builder /app/dist /usr/share/nginx/html/memo
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Expose port 80 and start Nginx
 EXPOSE 80
